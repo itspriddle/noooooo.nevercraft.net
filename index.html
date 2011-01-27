@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Noooooo</title>
+  <meta name="viewport" content="width=300; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <script type="text/javascript">
+    document.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('button').addEventListener('click', function(e) {
+        var mp3 = document.getElementById('mp3');
+
+        e.preventDefault();
+
+        if ( ! mp3.paused) {
+          mp3.pause();
+          mp3.currentTime = 0;
+        }
+
+        mp3.play();
+      });
+    });
+  </script>
+  <style type="text/css" media="screen">
+    body { overflow: hidden; }
+    #mp3, #button span { display: none; }
+
+    #button { display: block; margin: 100px auto; background-image: url(images/button.png); width: 221px; height: 209px; -webkit-tap-highlight-color: rgba(255,255,255,0); }
+
+    #button:link, #button:visited, #button:hover { background-position: 0 0; }
+    #button:active { background-position: 220px 0; }
+
+    @media screen and (max-device-width: 300px) {
+      #button:link, #button:visited, #button:visited { background-position: 0 0 !important; }
+      #button:hover { background-position: 220px 0 !important; }
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <audio id="mp3" src="sounds/noooooo.mp3" preload="auto"></audio>
+
+  <div id="button"><span>Noooooo</span></div>
+
+</body>
+</html>
