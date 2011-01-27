@@ -26,15 +26,20 @@
     });
   </script>
   <style type="text/css" media="screen">
+    html, body { height: 100%; }
     body { overflow: hidden; }
+
     #mp3, #button span { display: none; }
 
-    #button { display: block; margin: 100px auto; background-image: url(images/button.png); width: 221px; height: 209px; -webkit-tap-highlight-color: rgba(255,255,255,0); }
+    #container { height: 100%; width: 100%; border: 0; }
+    #container td { height: 100%; width: 100%; vertical-align: middle;}
+
+    #button { display: block; margin: 0 auto; background-image: url(images/button.png); width: 221px; height: 209px; -webkit-tap-highlight-color: rgba(255,255,255,0); }
 
     #button:link, #button:visited, #button:hover { background-position: 0 0; }
     #button:active { background-position: 220px 0; }
 
-    @media screen and (max-device-width: 300px) {
+    @media screen and (max-device-width: 480px) {
       #button:link, #button:visited, #button:visited { background-position: 0 0 !important; }
       #button:hover { background-position: 220px 0 !important; }
     }
@@ -44,9 +49,14 @@
 </head>
 <body>
 
+  <table id="container">
+    <tr>
+      <td>
+        <div id="button"><span>Noooooo</span></div>
+      </td>
+    </tr>
+  </table>
   <audio id="mp3" src="sounds/noooooo.mp3" preload="auto"></audio>
-
-  <div id="button"><span>Noooooo</span></div>
 
 </body>
 </html>
