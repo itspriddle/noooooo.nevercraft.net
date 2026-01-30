@@ -1,62 +1,412 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Noooooo</title>
-  <meta name="viewport" content="width=300; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
-  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-sm.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <script type="text/javascript">
-    document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById('button').addEventListener('click', function(e) {
-        var mp3 = document.getElementById('mp3');
-
-        e.preventDefault();
-
-        if ( ! mp3.paused) {
-          mp3.pause();
-          mp3.currentTime = 0;
-        }
-
-        mp3.play();
-      });
-    });
-  </script>
-  <style type="text/css" media="screen">
-    html, body { height: 100%; }
-    body { overflow: hidden; }
-
-    #mp3, #button span { display: none; }
-
-    #container { height: 100%; width: 100%; border: 0; }
-    #container td { height: 100%; width: 100%; vertical-align: middle;}
-
-    #button { display: block; margin: 0 auto; background-image: url(images/button.png); width: 221px; height: 209px; -webkit-tap-highlight-color: rgba(255,255,255,0); }
-
-    #button:link, #button:visited, #button:hover { background-position: 0 0; }
-    #button:active { background-position: 220px 0; }
-
-    @media screen and (max-device-width: 300px) {
-      #button:link, #button:visited, #button:visited { background-position: 0 0 !important; }
-      #button:hover { background-position: 220px 0 !important; }
+  <meta charset="UTF-8">
+  <title>NOOOOOO!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-sm.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-  </style>
+    :root {
+      --sith-red: #ff1a1a;
+      --sith-glow: #ff4444;
+      --void-black: #0a0a0a;
+      --steel-dark: #1a1a2e;
+      --steel-mid: #16213e;
+    }
 
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: var(--void-black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      position: relative;
+    }
+
+    /* Animated starfield background */
+    .starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Death Star silhouette */
+    .death-star {
+      position: fixed;
+      top: 8%;
+      right: -15%;
+      width: 40vmin;
+      height: 40vmin;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a2a3a 0%, #1a1a2a 50%, #0a0a15 100%);
+      box-shadow:
+        inset -15px -15px 30px rgba(0,0,0,0.8),
+        inset 5px 5px 20px rgba(60,60,80,0.3),
+        0 0 60px rgba(0,0,0,0.5);
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .death-star::before {
+      content: '';
+      position: absolute;
+      top: 25%;
+      left: 20%;
+      width: 30%;
+      height: 30%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #15151f 0%, #0a0a10 100%);
+      box-shadow: inset 2px 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .death-star::after {
+      content: '';
+      position: absolute;
+      top: 48%;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #1a1a2a, #2a2a3a, #1a1a2a, transparent);
+    }
+
+    /* Main content */
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .title {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sith-red);
+      text-shadow:
+        0 0 10px var(--sith-red),
+        0 0 20px var(--sith-red),
+        0 0 40px rgba(255, 26, 26, 0.5),
+        0 0 80px rgba(255, 26, 26, 0.3);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        text-shadow:
+          0 0 10px var(--sith-red),
+          0 0 20px var(--sith-red),
+          0 0 40px rgba(255, 26, 26, 0.5),
+          0 0 80px rgba(255, 26, 26, 0.3);
+      }
+      50% {
+        text-shadow:
+          0 0 20px var(--sith-red),
+          0 0 40px var(--sith-red),
+          0 0 60px rgba(255, 26, 26, 0.7),
+          0 0 100px rgba(255, 26, 26, 0.5);
+      }
+    }
+
+    /* The button */
+    .btn-container {
+      position: relative;
+    }
+
+    .btn {
+      position: relative;
+      width: clamp(160px, 45vmin, 220px);
+      height: clamp(160px, 45vmin, 220px);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background:
+        radial-gradient(ellipse 60% 30% at 50% 20%, rgba(255,255,255,0.15) 0%, transparent 60%),
+        radial-gradient(circle at 50% 50%, #2a2a4a 0%, #1a1a2e 40%, #0f0f1a 100%);
+      box-shadow:
+        0 0 0 4px #0a0a15,
+        0 0 0 8px #1a1a2e,
+        0 8px 30px rgba(0,0,0,0.8),
+        inset 0 -8px 20px rgba(0,0,0,0.6),
+        inset 0 8px 20px rgba(60,60,100,0.2);
+      transition: all 0.15s ease;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 25%, rgba(255,100,100,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #1a0a0a 0%, #0f0505 100%);
+      box-shadow:
+        inset 0 -4px 15px rgba(0,0,0,0.8),
+        inset 0 4px 10px rgba(255,50,50,0.1),
+        0 0 30px rgba(255,26,26,0.3);
+      transition: all 0.15s ease;
+    }
+
+    .btn::after {
+      content: 'NOOOOOO';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.7rem, 3vmin, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--sith-red);
+      text-shadow: 0 0 10px var(--sith-red);
+      opacity: 0.9;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+    }
+
+    .btn:hover::before {
+      box-shadow:
+        inset 0 -4px 15px rgba(0,0,0,0.8),
+        inset 0 4px 10px rgba(255,50,50,0.2),
+        0 0 50px rgba(255,26,26,0.5);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn:active::before {
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 35%, rgba(255,100,100,0.4) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #2a0a0a 0%, #150505 100%);
+      box-shadow:
+        inset 0 4px 15px rgba(0,0,0,0.8),
+        inset 0 -4px 10px rgba(255,50,50,0.1),
+        0 0 60px rgba(255,26,26,0.7);
+    }
+
+    /* Ring pulse effect on press */
+    .ring-pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid var(--sith-red);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ring-pulse.active {
+      animation: ring-expand 0.8s ease-out forwards;
+    }
+
+    @keyframes ring-expand {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Screen flash effect */
+    .flash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--sith-red);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .flash-overlay.active {
+      animation: screen-flash 0.3s ease-out;
+    }
+
+    @keyframes screen-flash {
+      0% { opacity: 0.4; }
+      100% { opacity: 0; }
+    }
+
+    /* Vader mask hint at bottom */
+    .vader-hint {
+      position: fixed;
+      bottom: -5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vmin;
+      height: 30vmin;
+      background: radial-gradient(ellipse at 50% 100%, rgba(20,20,30,0.8) 0%, transparent 70%);
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .vader-hint::before,
+    .vader-hint::after {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      width: 8vmin;
+      height: 12vmin;
+      background: radial-gradient(ellipse at 50% 50%, rgba(10,10,15,0.9) 0%, transparent 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+
+    .vader-hint::before { left: 30%; }
+    .vader-hint::after { right: 30%; }
+
+    /* Subtle breathing animation for atmosphere */
+    @keyframes breathe {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.5; }
+    }
+
+    .atmosphere {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(to top, rgba(255,26,26,0.05) 0%, transparent 100%);
+      pointer-events: none;
+      animation: breathe 4s ease-in-out infinite;
+      z-index: 0;
+    }
+  </style>
 </head>
 <body>
+  <div class="starfield" id="starfield"></div>
+  <div class="death-star"></div>
+  <div class="vader-hint"></div>
+  <div class="atmosphere"></div>
+  <div class="flash-overlay" id="flash"></div>
 
-  <table id="container">
-    <tr>
-      <td>
-        <div id="button"><span>Noooooo</span></div>
-      </td>
-    </tr>
-  </table>
-  <audio id="mp3" src="sounds/noooooo.mp3" preload="auto"></audio>
+  <div class="container">
+    <h1 class="title">Do It</h1>
+    <div class="btn-container">
+      <button class="btn" id="button" aria-label="Play Darth Vader Nooooo sound">
+        <span class="ring-pulse" id="ring1"></span>
+        <span class="ring-pulse" id="ring2"></span>
+        <span class="ring-pulse" id="ring3"></span>
+      </button>
+    </div>
+  </div>
 
+  <audio id="audio" src="sounds/noooooo.mp3" preload="auto"></audio>
+
+  <script>
+    // Generate starfield
+    const starfield = document.getElementById('starfield');
+    const starCount = 80;
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.opacity = Math.random() * 0.5 + 0.2;
+      star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+      starfield.appendChild(star);
+    }
+
+    // Audio and button logic
+    const button = document.getElementById('button');
+    const audio = document.getElementById('audio');
+    const flash = document.getElementById('flash');
+    const rings = [
+      document.getElementById('ring1'),
+      document.getElementById('ring2'),
+      document.getElementById('ring3')
+    ];
+
+    let ringIndex = 0;
+
+    function playSound() {
+      // Reset and play audio
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+
+      // Flash effect
+      flash.classList.remove('active');
+      void flash.offsetWidth;
+      flash.classList.add('active');
+
+      // Staggered ring pulses
+      rings.forEach((ring, i) => {
+        ring.classList.remove('active');
+        void ring.offsetWidth;
+        setTimeout(() => ring.classList.add('active'), i * 100);
+      });
+    }
+
+    button.addEventListener('click', playSound);
+    button.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      playSound();
+    });
+
+    // Prevent scrolling and zooming
+    document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+  </script>
 </body>
 </html>
